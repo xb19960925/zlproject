@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,9 +28,8 @@
         android:text="跳过 5"
         android:textColor="@color/white"
         android:textSize="@dimen/font_12"
-        android:visibility="gone"
-        app:layout_constraintRight_toRightOf="@+id/iv_splash_ad"
-        app:layout_constraintTop_toTopOf="@+id/iv_splash_ad" />
+        android:layout_alignParentRight="true"
+        />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
