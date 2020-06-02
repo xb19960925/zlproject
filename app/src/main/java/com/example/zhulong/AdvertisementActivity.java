@@ -1,69 +1,102 @@
 package com.example.zhulong;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-
+import android.graphics.Point;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.WindowManager;
+import com.example.data.BaseInfo;
+import com.example.data.MainAdEntity;
+import com.example.data.SpecialtyChooseEntity;
+import com.example.frame.ApiConfig;
+import com.example.frame.constants.ConstantKey;
+import com.example.frame.secret.SystemUtils;
+import com.example.zhulong.base.Application1907;
+import com.example.zhulong.base.BaseAdvertMvpActivity;
+import com.example.zhulong.model.AdertModel;
+import com.yiyatech.utils.newAdd.GlideUtil;
+import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
+import java.util.concurrent.TimeUnit;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+public class AdvertisementActivity extends BaseAdvertMvpActivity {
 
-public class AdvertisementActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private TextView tv_skip;
-    private ImageView iv_splash_ad;
     private int num = 5;
-    Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            switch (msg.what) {
-                case 0:
-                    if (num > 1) {
-                        num--;
-                        tv_skip.setText("跳过" + num);
-                        handler.sendEmptyMessageDelayed(0, 1000);
-                    } else {
-                        skipActivity();
-                    }
-                    break;
-            }
-            return false;
-        }
-    });
+    private BaseInfo<MainAdEntity> info;
+    private Disposable subscribe;
+    private SpecialtyChooseEntity.DataBean selectedInfo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertisement);
-        initView();
+    protected AdertModel setModel() {
+        return new AdertModel();
     }
 
-    private void initView() {
-        tv_skip = (TextView) findViewById(R.id.tv_skip);
-        iv_splash_ad = (ImageView) findViewById(R.id.iv_splash_ad);
+    @Override
+    protected void initData() {
+        selectedInfo = SharedPrefrenceUtils.getObject(this, ConstantKey.SUBJECT_SELECT);
+        String specialtyId = "";
+        if (selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id())) {
+            application.setSelectedInfo(selectedInfo);
 
+            specialtyId = selectedInfo.getSpecialty_id();
+        }
+        Point realSize = SystemUtils.getRealSize(this);
+        persenter.getData(ApiConfig.ADVERT, specialtyId, realSize.x, realSize.y);
+    }
 
-        tv_skip.setOnClickListener(this);
-        tv_skip.setText("跳过 5");
-        handler.sendEmptyMessage(0);
+    @Override
+    protected void initView() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        initDevice();
+    }
+
+    @Override
+    protected int setLayout() {
+        return R.layout.activity_advertisement;
+    }
+
+    @Override
+    public void netSuccess(int whichApi, Object[] d) {
+        info = (BaseInfo<MainAdEntity>) d[0];
+        GlideUtil.loadImage(advertImage, info.result.getInfo_url());
+        tvSkip.setVisibility(View.VISIBLE);
+        goTime();
+    }
+
+    private void goTime() {
+        subscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(pLong -> {
+                    if (num - pLong > -1) tvSkip.setText(num - pLong + "s");
+                    else {
+                        skipActivity();
+                        subscribe.dispose();
+                    }
+                });
     }
 
     public void skipActivity() {
-        startActivity(new Intent(AdvertisementActivity.this, MainActivity.class));
+        subscribe.dispose();
+        startActivity(new Intent(this,selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id()) ? application.isLogin() ? MainActivity.class : LoginActivity.class : SubjectActivity.class ));
         finish();
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscribe != null && !subscribe.isDisposed()) subscribe.dispose();
+    }
+
+    @OnClick({R.id.advert_image, R.id.tv_skip})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.advert_image:
+                break;
             case R.id.tv_skip:
                 skipActivity();
-                handler.removeMessages(0);
                 break;
         }
     }

@@ -27,3 +27,25 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext{
+    compileSdkVersion=29
+    buildToolsVersion='29.0.3'
+    minSdkVersion=21
+    targetSdkVersion=29
+    gsonVersion='2.8.1'
+    designVersion='29.0.3'
+    okHttpVersion='3.9.1'
+    ok3log=okHttpVersion
+    retrofitVersion='2.4.0'
+    converterVersion='2.4.0'
+    adapterRxjava2Version='2.4.0'
+    rxjavaVersion='2.1.3'
+    rxandroidVersion='2.0.1'
+    smartRefreshLayoutVersion='1.1.0'
+    glideVersion='4.8.0'
+    appcompatVersion='1.0.2'
+    junitVersion='4.12'
+    glideVersion='4.8.0'
+}
+

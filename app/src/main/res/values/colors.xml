@@ -1,63 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#28272C</color>
+    <color name="colorPrimaryDark">#28272C</color>
+    <color name="colorAccent">#28272C</color>
 
-    <color name="colorPrimary">#2A292D</color>
-    <color name="colorPrimaryDark">#2A292D</color>
-    <color name="colorPrimaryDeep">#17AA8D</color>
-    <color name="colorAccent">#EB6100</color>
+    <color name="app_theme">#28272C</color>
+    <color name="green_theme">#00B38B</color>
+    <color name="green_search">#33C2A2</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_translucent">#80000000</color>
+    <color name="color_translucent_white">#80ffffff</color>
+    <color name="color_transparent30_white">#B3ffffff</color>
+    <color name="color_transparent70_white">#4Dffffff</color>
+    <color name="color_transparent80_white">#33ffffff</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_red">#ff0000</color>colorPrimary
+    <color name="color_black">#000</color>
+    <color name="color_green">#00ff00</color>
+    <color name="color_pink">#FF4081</color>
 
-    <color name="colorPrimaryRed">#EE2E2F</color>
-    <color name="colorGray999">#999999</color>
-    <color name="colorGrayEEE">#EEEEEE</color>
-    <color name="colorTransparentRed">#F69596</color>
-    <color name="colorEB">#EBEBEB</color>
-    <color name="color726151">#726151</color>
-    <color name="colorBgKhaki">#7E6B5A</color>
+    <color name="color_gray_line">#F3F3F3</color>
+    <color name="color_black_text">#333333</color>
+    <color name="color_gray_text">#999999</color>
+    <color name="color_red_text">#DE2E1E</color>
+    <color name="color_red_bg">#DE2E1E</color>
+    <color name="color_red_line">#DE2E1E</color>
+    <color name="color_gray_tab">#7E7E7E</color>
 
-    <color name="transparent">#00000000</color>
-    <color name="windowBackground">@color/BgLight</color>
-    <color name="white">#ffffff</color>
-    <color name="BgLight">#f7f7f7</color>
-    <color name="grey">#bbbbbb</color>
-    <color name="colorToast">#B015a6dd</color>
-    <color name="green">#5FB946</color>
-    <color name="transparent_yellow">#33ffff7e</color>
-    <color name="fontColorZan">#ffff7e</color>
-    <color name="white_ea">#eaeaea</color>
-    <color name="bgF0">#f0f0f0</color>
-
-    <color name="gray75">#8c000000</color>
-
-    <color name="transparentBlack">#8c000000</color>
-    <color name="bgColor95p31">#f2313131</color>
-
-    <color name="fontColorblack">#313131</color>
-    <color name="fontColorDeep">#444444</color>
-    <color name="fontColorGray">@color/colorGray999</color>
-    <color name="fontColorGreyB">#bbbbbb</color>
-    <color name="fontColorGreyA">#aaaaaa</color>
-    <color name="fontColorHint">#dcdcdc</color>
-    <color name="fontColorBlue">#1caeed</color>
-    <color name="colorVoiceAlpha20">#88000000</color>
-
-    <color name="colorwrite50">#20ffffff</color>
-    <color name="selectColor">#FFE400</color>
-    <color name="whiteEC">#ECECEC</color>
-    <color name="vip_pay_succeeded">#CBBCA1</color>
-    <color name="vip_pay_succeededs_gold">#CA9E53</color>
-    <color name="vip_pay_succeededs_btn">#CA392A</color>
-    <color name="color_d3493e">#D3493E</color>
-
-    <!-- Crop -->
-    <color name="crop__button_bar">#f3f3f3</color>
-    <color name="crop__button_text">#666666</color>
-    <color name="crop__selector_pressed">#1a000000</color>
-
-    <!-- border -->
-    <color name="border">#e5e5e5</color>
-    <color name="vip_avatar_border">#ebc28b</color>
-
-    <!-- 字体色 -->
     <color name="content">#bcbcbc</color>
     <color name="yellow">#FFA015</color>
     <color name="bottom_back">#A0A4AA</color>
@@ -65,7 +34,6 @@
     <color name="fontColorLightGray">#777777</color>
     <color name="fontColor666">#666666</color>
     <color name="fontColorPrimary">#2A292D</color> <!-- 主颜色 -->
-    <color name="fontColorAccent">@color/colorPrimaryRed</color> <!-- 副颜色 -->
     <color name="fontColorDeepGray">#969696</color>
     <color name="fontColorBlue26">#26a2e9</color>
     <color name="fontColorDisable">#dddddd</color>
@@ -94,7 +62,6 @@
     <color name="vipDivider">#F4F4F4</color>
 
     <!-- 小组分类界面 -->
-    <color name="gray_light">@color/colorGrayEEE</color>
     <color name="gray_deep">#d5d5d5</color>
 
     <!-- popupWindow -->
@@ -168,5 +135,52 @@
     <color name="greenExam">#20c86b</color>
     <color name="home_sign_gold">#ffe63c</color>
     <color name="greyPink">#ffe5e5</color>
+    <color name="fontColorblack">#313131</color>
+    <color name="fontColorDeep">#444444</color>
+    <color name="fontColorGray">@color/colorGray999</color>
+    <color name="colorGray999">#999999</color>
+    <color name="fontColorGreyB">#bbbbbb</color>
+    <color name="fontColorGreyA">#aaaaaa</color>
+    <color name="fontColorHint">#dcdcdc</color>
+    <color name="fontColorBlue">#1caeed</color>
+    <color name="colorPrimaryDeep">#17AA8D</color>
+
+    <color name="colorPrimaryRed">#EE2E2F</color>
+    <color name="colorGrayEEE">#EEEEEE</color>
+    <color name="colorTransparentRed">#F69596</color>
+    <color name="colorEB">#EBEBEB</color>
+    <color name="color726151">#726151</color>
+    <color name="colorBgKhaki">#7E6B5A</color>
+    <color name="dark_gray">#434244</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="windowBackground">@color/BgLight</color>
+    <color name="white">#ffffff</color>
+    <color name="BgLight">#f7f7f7</color>
+    <color name="grey">#bbbbbb</color>
+    <color name="colorToast">#B015a6dd</color>
+    <color name="green">#5FB946</color>
+    <color name="transparent_yellow">#33ffff7e</color>
+    <color name="fontColorZan">#ffff7e</color>
+    <color name="white_ea">#eaeaea</color>
+
+    <color name="transparentBlack">#8c000000</color>
+    <color name="colorVoiceAlpha20">#88000000</color>
+
+    <color name="colorwrite50">#20ffffff</color>
+    <color name="selectColor">#FFE400</color>
+    <color name="whiteEC">#ECECEC</color>
+    <color name="vip_pay_succeeded">#CBBCA1</color>
+    <color name="vip_pay_succeededs_gold">#CA9E53</color>
+    <color name="vip_pay_succeededs_btn">#CA392A</color>
+    <color name="color_d3493e">#D3493E</color>
+
+    <!-- Crop -->
+    <color name="crop__button_bar">#f3f3f3</color>
+    <color name="crop__button_text">#666666</color>
+    <color name="crop__selector_pressed">#1a000000</color>
+
+    <!-- border -->
+    <color name="border">#e5e5e5</color>
 
 </resources>
