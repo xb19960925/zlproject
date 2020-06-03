@@ -2,21 +2,25 @@ package com.example.zhulong;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+
 import com.example.data.BaseInfo;
+import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
 import com.example.data.SpecialtyChooseEntity;
 import com.example.frame.ApiConfig;
 import com.example.frame.constants.ConstantKey;
 import com.example.frame.secret.SystemUtils;
-import com.example.zhulong.base.Application1907;
 import com.example.zhulong.base.BaseAdvertMvpActivity;
 import com.example.zhulong.model.AdertModel;
 import com.yiyatech.utils.newAdd.GlideUtil;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
+
 import java.util.concurrent.TimeUnit;
+
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,11 +45,16 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
         String specialtyId = "";
         if (selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id())) {
             application.setSelectedInfo(selectedInfo);
-
             specialtyId = selectedInfo.getSpecialty_id();
         }
         Point realSize = SystemUtils.getRealSize(this);
         persenter.getData(ApiConfig.ADVERT, specialtyId, realSize.x, realSize.y);
+        new Handler().postDelayed(() -> {
+            if (info == null) skipActivity();
+        }, 3000);
+        LoginInfo loginInfo = SharedPrefrenceUtils.getObject(this, ConstantKey.LOGIN_INFO);
+        if (loginInfo != null && !TextUtils.isEmpty(loginInfo.getUid()))
+            application.setLoginInfo(loginInfo);
     }
 
     @Override
@@ -80,7 +89,8 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
 
     public void skipActivity() {
         subscribe.dispose();
-        startActivity(new Intent(this,selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id()) ? application.isLogin() ? MainActivity.class : LoginActivity.class : SubjectActivity.class ));
+        if (subscribe != null) subscribe.dispose();
+        startActivity(new Intent(this, selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id()) ? application.isLogin() ? MainActivity.class : LoginActivity.class : SubjectActivity.class));
         finish();
     }
 
@@ -94,6 +104,9 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.advert_image:
+                if (info != null) {
+//                    mInfo.result.getJump_url();
+                }
                 break;
             case R.id.tv_skip:
                 skipActivity();

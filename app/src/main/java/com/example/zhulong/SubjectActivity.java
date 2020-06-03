@@ -1,11 +1,9 @@
 package com.example.zhulong;
 
-import android.os.Bundle;
-import android.widget.TextView;
 
+import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.data.BaseInfo;
 import com.example.data.SpecialtyChooseEntity;
 import com.example.frame.ApiConfig;
@@ -14,12 +12,9 @@ import com.example.zhulong.adapter.SubjectAdapter;
 import com.example.zhulong.base.BaseMvpActivity;
 import com.example.zhulong.model.LauchModel;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SubjectActivity extends BaseMvpActivity<LauchModel> {
@@ -36,8 +31,9 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
 
     @Override
     protected void initData() {
-        if (SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST) != null) {
-            mListData.addAll(SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST));
+        List<SpecialtyChooseEntity> info =  SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST);
+        if (info != null) {
+            mListData.addAll(info);
             subjectAdapter.notifyDataSetChanged();
         } else
             persenter.getData(ApiConfig.SUBJECT);

@@ -2,9 +2,7 @@ package com.example.data;
 
 import java.io.Serializable;
 
-/**
- * Created by 任小龙 on 2020/6/2.
- */
+
 public class BaseInfo<D> implements Serializable {
     private static final long serialVersionUID = 7178751760258280801L;
     public int errNo;
