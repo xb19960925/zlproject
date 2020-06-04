@@ -42,6 +42,9 @@ dependencies {
     api 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.android.support:design:29.0.3'
+
+    implementation 'androidx.navigation:navigation-fragment:2.0.0-rc02'
+    implementation 'androidx.navigation:navigation-ui:2.0.0-rc02'
     //tablayout依赖
     implementation "com.google.android.material:material:1.0.0"
     api project(path: ':frame')

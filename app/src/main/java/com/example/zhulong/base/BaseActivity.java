@@ -28,7 +28,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         application = (Application1907) getApplication();
-
+        Log.e("--华丽的类名--", this.getClass().getName() );
 
     }
 

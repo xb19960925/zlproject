@@ -1,8 +1,6 @@
 package com.example.zhulong;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.data.BaseInfo;
@@ -11,8 +9,8 @@ import com.example.data.PersonHeader;
 import com.example.frame.ApiConfig;
 import com.example.frame.constants.ConstantKey;
 import com.example.zhulong.base.BaseMvpActivity;
+import com.example.zhulong.design.LoginView;
 import com.example.zhulong.model.AccountModel;
-import com.yiyatech.utils.ext.ToastUtils;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
 import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
