@@ -12,9 +12,6 @@ import com.example.zhulong.R;
 import com.example.zhulong.base.Application1907;
 
 
-/**
- * Created by 任小龙 on 2020/6/2.
- */
 public class LauchModel implements ConnectionModel {
     private NetManger mManger = NetManger.getInstance();
     private Context mContext = Application1907.get07ApplicationContext();

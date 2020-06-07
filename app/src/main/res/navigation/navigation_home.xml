@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_home"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homePageFragment">
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.zhulong.fragment.HomeFragment"
-        android:label="HomeFragment">
+        android:id="@+id/homePageFragment"
+        android:name="com.example.zhulong.fragment.HomePageFragment"
+        android:label="homePageFragment">
         <action
             android:id="@+id/toAdvert"
             app:destination="@id/courseFragment" />

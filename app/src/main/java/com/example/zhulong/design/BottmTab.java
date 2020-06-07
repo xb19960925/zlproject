@@ -63,6 +63,7 @@ public class BottmTab extends RelativeLayout {
                 usedTabView.remove(i - 1);
             }
         }
+        typedArray.recycle();
     }
 
     /**
@@ -122,5 +123,16 @@ public class BottmTab extends RelativeLayout {
             defaultTab = 5;
         }
         setStyle();
+        if (mOnBottomTabClickCallBack != null) mOnBottomTabClickCallBack.clickTab(defaultTab);
+    }
+
+    private OnBottomTabClickCallBack mOnBottomTabClickCallBack;
+
+    public void setOnBottomTabClickCallBack(OnBottomTabClickCallBack pOnBottomTabClickCallBack){
+        mOnBottomTabClickCallBack = pOnBottomTabClickCallBack;
+    }
+
+    public interface OnBottomTabClickCallBack{
+        void clickTab(int tab);
     }
 }

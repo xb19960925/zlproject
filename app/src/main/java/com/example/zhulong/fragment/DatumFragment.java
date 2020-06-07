@@ -9,21 +9,37 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zhulong.R;
+import com.example.zhulong.base.BaseMvpFragment;
+import com.example.zhulong.model.DatumModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DatumFragment extends Fragment {
-
-    public DatumFragment() {
-        // Required empty public constructor
-    }
+public class DatumFragment extends BaseMvpFragment<DatumModel> {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_datum, container, false);
+    public DatumModel setModel() {
+        return null;
+    }
+
+    @Override
+    public int setLayoutId() {
+        return R.layout.fragment_datum;
+    }
+
+    @Override
+    public void setUpView() {
+
+    }
+
+    @Override
+    public void setUpData() {
+
+    }
+
+    @Override
+    public void netSuccess(int whichApi, Object[] pD) {
+
     }
 }

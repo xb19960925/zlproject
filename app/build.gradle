@@ -47,6 +47,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.0.0-rc02'
     //tablayout依赖
     implementation "com.google.android.material:material:1.0.0"
+
+//轮播图最新版本
+    implementation 'com.youth.banner:banner:1.4.10'
     api project(path: ':frame')
     implementation project(path: ':data')
     implementation project(path: ':utils')

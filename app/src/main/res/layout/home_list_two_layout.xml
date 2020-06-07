@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/tv_big_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <ImageView
+        android:id="@+id/iv_big_photo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:layout_margin="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/tv_big_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+
+    <ImageView
+        android:id="@+id/iv_study_photo"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_margin="@dimen/dp_10"
+        android:src="@drawable/ic_lesson_desc_s5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_big_photo"
+        />
+    <TextView
+        android:id="@+id/tv_study"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintLeft_toRightOf="@id/iv_study_photo"
+        app:layout_constraintTop_toBottomOf="@id/iv_big_photo"/>
+
+    <ImageView
+        android:id="@+id/iv_good_photo"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_margin="@dimen/dp_10"
+        android:src="@drawable/ic_like"
+        app:layout_constraintLeft_toRightOf="@id/tv_study"
+        app:layout_constraintTop_toBottomOf="@id/iv_big_photo"
+        />
+    <TextView
+        android:id="@+id/tv_good"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintLeft_toRightOf="@id/iv_good_photo"
+        app:layout_constraintTop_toBottomOf="@id/iv_big_photo"/>
+
+    <View
+        android:id="@+id/line_item"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_1"
+        android:layout_margin="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/colorPrimary"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

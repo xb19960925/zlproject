@@ -88,7 +88,6 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
     }
 
     public void skipActivity() {
-        subscribe.dispose();
         if (subscribe != null) subscribe.dispose();
         startActivity(new Intent(this, selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id()) ? application.isLogin() ? MainActivity.class : LoginActivity.class : SubjectActivity.class));
         finish();

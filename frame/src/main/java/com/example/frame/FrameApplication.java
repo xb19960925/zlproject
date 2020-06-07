@@ -23,6 +23,7 @@ public class FrameApplication extends UtilsApplication {
 
     public void setSelectedInfo(SpecialtyChooseEntity.DataBean pSelectedInfo) {
         selectedInfo = pSelectedInfo;
+
     }
 
     public String getCookie() {
