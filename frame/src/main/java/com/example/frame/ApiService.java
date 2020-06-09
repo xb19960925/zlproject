@@ -1,15 +1,17 @@
 package com.example.frame;
 
 
+import com.example.data.BannerAndLiveVip;
 import com.example.data.BaseInfo;
 import com.example.data.CourseBean;
-import com.example.data.HomePageBannerBean;
-import com.example.data.HomePageBean;
+import com.example.data.CourseListInfo;
+import com.example.data.IndexCommondEntity;
 import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
 import com.example.data.PersonHeader;
 import com.example.data.SpecialtyChooseEntity;
-import com.example.data.TestInfo;
+import com.example.data.VipPageList;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
@@ -20,14 +22,15 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 public interface ApiService {
 
-    @GET("ad/getAd")
-    Observable<BaseInfo<MainAdEntity>> getAdvert(@QueryMap Map<String,Object> pMap);
+    @GET
+    Observable<BaseInfo<MainAdEntity>> getAdvert(@Url String url, @QueryMap Map<String,Object> pMap);
 
-    @GET("lesson/getAllspecialty")
-    Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList();
+    @GET
+    Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList(@Url String url);
 
     @GET("loginByMobileCode")
     Observable<BaseInfo<String>> getLoginVerify(@Query("mobile") String mobile);
@@ -35,27 +38,23 @@ public interface ApiService {
     @GET("loginByMobileCode")
     Observable<BaseInfo<LoginInfo>> loginByVerify(@QueryMap Map<String, Object> params);
 
-    @POST("getUserHeaderForMobile")
-    @FormUrlEncoded
-    Observable<BaseInfo<PersonHeader>> getHeaderInfo(@FieldMap Map<String,Object> params);
 
-    @POST("lesson/getCarouselphoto")
+    @POST
     @FormUrlEncoded
-    Observable<HomePageBannerBean> getHomeBannerOrLiveList(@FieldMap Map<String,Object> params);
+    Observable<BaseInfo<PersonHeader>> getHeaderInfo(@Url String url,@FieldMap Map<String,Object> params);
 
-    @POST("lesson/getIndexCommend")
-    @FormUrlEncoded
-    Observable<BaseInfo<HomePageBean>> getHomePageData(@FieldMap Map<String,Object> params);
+    @GET
+    Observable<BaseInfo<List<IndexCommondEntity>>> getCommonList(@Url String url, @QueryMap Map<String,Object> params);
 
-    @POST("lesson/getLessonListForApi")
-    @FormUrlEncoded
-    Observable<CourseBean> getCourseData(@FieldMap Map<String,Object> params);
+    @GET
+    Observable<JsonObject> getBannerLive(@Url String url, @QueryMap Map<String,Object> params);
 
-    @POST("lesson/get_new_vip ")
-    @FormUrlEncoded
-    Observable<CourseBean> getMemberBannerData(@FieldMap Map<String,Object> params);
+    @GET
+    Observable<BaseInfo<CourseListInfo>> getCourseChildData(@Url String url, @QueryMap Map<String,Object> params);
+    @GET
+    Observable<BaseInfo<BannerAndLiveVip>> getMemberPageData(@Url String url, @QueryMap Map<String,Object> params);
 
-    @POST("lesson/getVipSmallLessonList")
+    @POST
     @FormUrlEncoded
-    Observable<CourseBean> getMemberListData(@FieldMap Map<String,Object> params);
+    Observable<BaseInfo<VipPageList>> getMemberListData(@Url String url, @FieldMap Map<String,Object> params);
 }

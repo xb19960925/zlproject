@@ -6,18 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.MemberFragment">
 
-    <com.youth.banner.Banner
-        android:id="@+id/member_banner"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_250"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    <com.example.zhulong.design.BottmTab
-        android:id="@+id/bottom_tab"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_100"
-
-        />
+    <include layout="@layout/refresh_list_layout"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

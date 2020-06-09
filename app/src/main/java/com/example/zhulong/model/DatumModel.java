@@ -17,12 +17,7 @@ public class DatumModel implements ConnectionModel {
     @Override
     public void getNetData(ConnectionPersenter connectionPersenter, int whichApi, Object[] params) {
         switch (whichApi){
-            case ApiConfig.GET_COURSE_INFO:
-                //final int loadType = (int) params[1];
-                ParamHashMap map = new ParamHashMap().add("page", 1).add("limit", 15).add("course_type", 1);
-                if (!TextUtils.isEmpty((String) params[0])) map.add("specialty_id", "1");
-                mManger.netWork(mManger.getService(mContext.getString(R.string.edu_openapi)).getCourseData(map), connectionPersenter, whichApi);
-                break;
+
         }
     }
 }

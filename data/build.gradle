@@ -31,6 +31,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+//Gson解析的依赖包
+    api 'com.google.code.gson:gson:2.8.1'
+
 //EventBus依赖
     api 'org.greenrobot:eventbus:3.1.1'
 }

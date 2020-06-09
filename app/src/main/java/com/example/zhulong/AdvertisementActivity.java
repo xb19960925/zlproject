@@ -15,7 +15,7 @@ import com.example.frame.ApiConfig;
 import com.example.frame.constants.ConstantKey;
 import com.example.frame.secret.SystemUtils;
 import com.example.zhulong.base.BaseAdvertMvpActivity;
-import com.example.zhulong.model.AdertModel;
+import com.example.zhulong.model.LauchModel;
 import com.yiyatech.utils.newAdd.GlideUtil;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
 
@@ -35,8 +35,8 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
     private SpecialtyChooseEntity.DataBean selectedInfo;
 
     @Override
-    protected AdertModel setModel() {
-        return new AdertModel();
+    protected LauchModel setModel() {
+        return new LauchModel();
     }
 
     @Override

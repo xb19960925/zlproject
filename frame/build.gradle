@@ -59,7 +59,8 @@ dependencies {
     api "com.scwang.smartrefresh:SmartRefreshLayout:$smartRefreshLayoutVersion"
     //加载图片的依赖包
     api "com.github.bumptech.glide:glide:$glideVersion"
-
+//Gson解析的依赖包
+    api 'com.google.code.gson:gson:2.8.1'
     implementation project(path: ':utils')
     implementation project(path: ':data')
 

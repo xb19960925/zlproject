@@ -7,22 +7,24 @@ import com.example.frame.ApiConfig;
 import com.example.frame.ApiService;
 import com.example.frame.ConnectionModel;
 import com.example.frame.ConnectionPersenter;
+import com.example.frame.FrameApplication;
+import com.example.frame.Host;
 import com.example.frame.NetManger;
+import com.example.frame.constants.Constants;
 import com.example.zhulong.ParamHashMap;
 import com.example.zhulong.R;
 import com.example.zhulong.base.Application1907;
+import com.example.zhulong.constants.Method;
 
 public class CourseModel implements ConnectionModel {
-    private NetManger mManger = NetManger.getInstance();
-    private Context mContext = Application1907.get07ApplicationContext();
+    private String subjectId = FrameApplication.getFrameApplication().getSelectedInfo().getSpecialty_id();
     @Override
     public void getNetData(ConnectionPersenter connectionPersenter, int whichApi, Object[] params) {
         switch (whichApi){
-            case ApiConfig.GET_COURSE_INFO:
+            case ApiConfig.COURSE_CHILD:
                 //final int loadType = (int) params[1];
-                ParamHashMap map = new ParamHashMap().add("page", 1).add("limit", 15).add("course_type", 1);
-                if (!TextUtils.isEmpty((String) params[0])) map.add("specialty_id", "1");
-                mManger.netWork(mManger.getService(mContext.getString(R.string.edu_openapi)).getCourseData(map), connectionPersenter, whichApi);
+                ParamHashMap add = new ParamHashMap().add("specialty_id", subjectId).add("page", params[2]).add("limit", Constants.LIMIT_NUM).add("course_type", params[1]);
+                NetManger.getInstance().netWork(NetManger.mService.getCourseChildData(Host.EDU_OPENAPI+ Method.GETLESSONLISTFORAPI,add),connectionPersenter,whichApi,params[0]);
                 break;
         }
     }

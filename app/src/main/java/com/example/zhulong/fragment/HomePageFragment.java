@@ -1,36 +1,28 @@
 package com.example.zhulong.fragment;
 
-import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.example.data.BannerLiveInfo;
 import com.example.data.BaseInfo;
-import com.example.data.HomePageBannerBean;
 import com.example.data.HomePageBean;
-import com.example.data.SpecialtyChooseEntity;
+import com.example.data.IndexCommondEntity;
 import com.example.frame.ApiConfig;
 import com.example.frame.LoadTypeConfig;
-import com.example.frame.constants.ConstantKey;
 import com.example.zhulong.R;
-import com.example.zhulong.adapter.HomeListAdapter;
 import com.example.zhulong.adapter.HomeLiveAdapter;
 import com.example.zhulong.base.BaseMvpFragment;
-import com.example.zhulong.design.BottmTab;
+import com.example.zhulong.interfaces.DataListener;
 import com.example.zhulong.model.HomePageModel;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
-import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,32 +30,19 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomePageFragment extends BaseMvpFragment<HomePageModel> {
-
-    @BindView(R.id.home_page_banner)
-    Banner homePageBanner;
-    @BindView(R.id.bottom_tab)
-    BottmTab bottomTab;
-    @BindView(R.id.home_page_live_broadcast_list)
-    RecyclerView homePageLiveBroadcastList;
-    @BindView(R.id.home_page_line)
-    View homePageLine;
-    @BindView(R.id.home_page_list)
-    RecyclerView homePageList;
-    @BindView(R.id.home_page_samrt)
-    SmartRefreshLayout homePageSamrt;
-    @BindView(R.id.tv_live_home_all)
-    TextView tvLiveHomeAll;
-    private List<Integer> normalIcon = new ArrayList<>();//为选中的icon
-    private List<Integer> selectedIcon = new ArrayList<>();// 选中的icon
-    private List<String> tabContent = new ArrayList<>();//tab对应的内容
+public class HomePageFragment extends BaseMvpFragment<HomePageModel> implements DataListener {
 
 
-    private SpecialtyChooseEntity.DataBean selectedInfo;
-    int page = 0;
-    private HomePageBannerBean.ResultBean result;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+    int currentPage = 1;
+    private List<IndexCommondEntity> bottomList = new ArrayList<>();
+    private List<String> bannerData = new ArrayList<>();
+    private List<BannerLiveInfo.Live> liveData = new ArrayList<>();
     private HomeLiveAdapter homeLiveAdapter;
-    private HomeListAdapter homeListAdapter;
+
 
     @Override
     public HomePageModel setModel() {
@@ -77,92 +56,86 @@ public class HomePageFragment extends BaseMvpFragment<HomePageModel> {
 
     @Override
     public void setUpView() {
-        initRecyclerView(homePageLiveBroadcastList, homePageSamrt, new GridLayoutManager(getActivity(), 2), null);
-        initRecyclerView(homePageList, homePageSamrt, new LinearLayoutManager(getActivity()), mode -> {
-            if (mode == LoadTypeConfig.REFRESH) {
-                page = 0;
-                persenter.getData(ApiConfig.HOME_PAGE_DATA, selectedInfo.getSpecialty_id(), page, 10);
-            } else {
-                page++;
-                persenter.getData(ApiConfig.HOME_PAGE_DATA, selectedInfo.getSpecialty_id(), page, 10);
-            }
-        });
-        setBottomView();
-        homeLiveAdapter = new HomeLiveAdapter(getActivity());
-        homeListAdapter = new HomeListAdapter(getActivity());
-        homePageLiveBroadcastList.setAdapter(homeLiveAdapter);
-        homePageList.setAdapter(homeListAdapter);
-    }
-
-    private void setBottomView() {
-        BottmTab tabView = getView().findViewById(R.id.bottom_tab);
-        Collections.addAll(normalIcon, R.drawable.ic_shortcuts_1, R.drawable.ic_shortcuts_6, R.drawable.ic_shortcuts_3, R.drawable.ic_shortcuts_4, R.drawable.ic_shortcuts_5);
-        Collections.addAll(selectedIcon, R.drawable.ic_shortcuts_1, R.drawable.ic_shortcuts_6, R.drawable.ic_shortcuts_3, R.drawable.ic_shortcuts_4, R.drawable.ic_shortcuts_5);
-        Collections.addAll(tabContent, "训练营", "图片库", "论坛", "问答", "礼品");
-        tabView.setResource(normalIcon, selectedIcon, tabContent, 0);
-//        bottomTab.setOnBottomTabClickCallBack(new BottmTab.OnBottomTabClickCallBack() {
-//            @Override
-//            public void clickTab(int tab) {
-//                switch (tab) {
-//                    case MAIN_PAGE:
-//                        navController.navigate(R.id.homePageFragment);
-//                        break;
-//                    case COURSE:
-//                        navController.navigate(R.id.courseFragment);
-//                        break;
-//                    case VIP:
-//                        navController.navigate(R.id.memberFragment);
-//                        break;
-//                    case DATA:
-//                        navController.navigate(R.id.datumFragment);
-//                        break;
-//                    case MINE:
-//                        navController.navigate(R.id.myFragment);
-//                        break;
-//                }
-//            }
-//        });
+        initRecyclerView(recyclerView, refreshLayout, new LinearLayoutManager(getActivity()),this);
+        homeLiveAdapter = new HomeLiveAdapter(getActivity(), bottomList, bannerData, liveData);
+        recyclerView.setAdapter(homeLiveAdapter);
     }
 
     @Override
     public void setUpData() {
-        selectedInfo = SharedPrefrenceUtils.getObject(getActivity(), ConstantKey.SUBJECT_SELECT);
-        
-        persenter.getData(ApiConfig.HOME_BANNER_LIVE, selectedInfo.getSpecialty_id(), 1, 1, 1);
-        persenter.getData(ApiConfig.HOME_PAGE_DATA, selectedInfo.getSpecialty_id(), page, 10);
+        persenter.getData(ApiConfig.HOME_PAGE_DATA, LoadTypeConfig.NORMAL, currentPage);
+        persenter.getData(ApiConfig.HOME_BANNER_LIVE, LoadTypeConfig.NORMAL);
     }
-
+    private boolean mainList = false, banLive = false;
     @Override
     public void netSuccess(int whichApi, Object[] pD) {
         switch (whichApi) {
-            case ApiConfig.HOME_BANNER_LIVE:
-                HomePageBannerBean homePageBannerBean = (HomePageBannerBean) pD[0];
-                result = homePageBannerBean.getResult();
-                homePageBanner.setImages(result.getCarousel()).setImageLoader(new ImageLoader() {
-                    @Override
-                    public void displayImage(Context context, Object path, ImageView imageView) {
-                        HomePageBannerBean.ResultBean.CarouselBean imgPath = (HomePageBannerBean.ResultBean.CarouselBean) path;
-                        Glide.with(context).load(imgPath.getImg()).into(imageView);
-                    }
-                }).start();
-                List<HomePageBannerBean.ResultBean.NoliveBean> nolive = homePageBannerBean.getResult().getNolive();
-                homeLiveAdapter.setNolive(nolive);
-                break;
             case ApiConfig.HOME_PAGE_DATA:
-                BaseInfo<HomePageBean> homePageBeanBaseInfo = (BaseInfo<HomePageBean>) pD[0];
-                List<HomePageBean.ResultBean> result = homePageBeanBaseInfo.result.getResult();
-                //                if (loadType == LoadTypeConfig.MORE) {
-//                    courseAdapter.setResult(result);
-//                    smart.finishLoadMore();
-//                } else if (loadType == LoadTypeConfig.REFRESH) {
-//                    courseAdapter.setResult(result);
-//                    smart.finishRefresh();
-//                } else {
-                homeListAdapter.setResult(result);
-//                }
+//                int loadMode = (int) ((Object[]) pD[1])[0];
+                int loadMode = (int) pD[1];
+                BaseInfo<List<IndexCommondEntity>> baseInfo = (BaseInfo<List<IndexCommondEntity>>) pD[0];
+                if (baseInfo.isSuccess()) {
+                    if (loadMode == LoadTypeConfig.MORE) refreshLayout.finishLoadMore();
+                    if (loadMode == LoadTypeConfig.REFRESH) {
+                        bottomList.clear();
+                        refreshLayout.finishRefresh();
+                    }
+                    bottomList.addAll(baseInfo.result);
+                    mainList = true;
+                    if (banLive) {
+                        homeLiveAdapter.notifyDataSetChanged();
+                        mainList = false;
+                    }
+                } else showToast("列表加载错误");
+                break;
+            case ApiConfig.HOME_BANNER_LIVE:
+                JsonObject jsonObject = (JsonObject) pD[0];
+                try {
+                    JSONObject object = new JSONObject(jsonObject.toString());
+                    if (object.getString("errNo").equals("0")) {
+//                        int load = (int) ((Object[]) pD[1])[0];
+                        int load = (int)pD[1];
+                        if (load == LoadTypeConfig.REFRESH) {
+                            bannerData.clear();liveData.clear();
+                        }
+                        String result = object.getString("result");
+                        JSONObject resultObject = new JSONObject(result);
+                        String live = resultObject.getString("live");
+                        //如果该字段是以boolean类型返回的，有两种处理方式 1：写两个实体类，一个live类型是Boolean，一个是list 2：当这个字段为Boolean类型时，将其干掉
+                        if (live.equals("true") || live.equals("false")) {
+                            resultObject.remove("live");
+                        }
+                        result = resultObject.toString();
+                        Gson gson = new Gson();
+                        BannerLiveInfo info = gson.fromJson(result, BannerLiveInfo.class);
+                        for (BannerLiveInfo.Carousel data : info.Carousel) {
+                            bannerData.add(data.thumb);
+                        }
+                        if(info.live != null )liveData.addAll(info.live);
+                        banLive = true;
+                        if (mainList) {
+                            homeLiveAdapter.notifyDataSetChanged();
+                            banLive = false;
+                        }
+                    }
+                } catch (JSONException pE) {
+                    pE.printStackTrace();
+                }
                 break;
         }
     }
 
 
+    @Override
+    public void dataType(int mode) {
+        if (mode == LoadTypeConfig.REFRESH) {
+            mainList = false;
+            banLive = false;
+            persenter.getData(ApiConfig.HOME_PAGE_DATA, LoadTypeConfig.REFRESH, 1);
+            persenter.getData(ApiConfig.HOME_BANNER_LIVE, LoadTypeConfig.REFRESH);
+        } else {
+            currentPage++;
+            persenter.getData(ApiConfig.HOME_PAGE_DATA, LoadTypeConfig.MORE, currentPage);
+        }
+    }
 }
