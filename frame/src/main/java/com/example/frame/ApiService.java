@@ -5,6 +5,7 @@ import com.example.data.BannerAndLiveVip;
 import com.example.data.BaseInfo;
 import com.example.data.CourseBean;
 import com.example.data.CourseListInfo;
+import com.example.data.DataGroupListEntity;
 import com.example.data.IndexCommondEntity;
 import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
@@ -57,4 +58,15 @@ public interface ApiService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo<VipPageList>> getMemberListData(@Url String url, @FieldMap Map<String,Object> params);
+
+    @GET
+    Observable<BaseInfo<List<DataGroupListEntity>>> getGroupList(@Url String url, @QueryMap Map<String,Object> params);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> removeFocus(@Url String url, @FieldMap Map<String,Object> params);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> focus(@Url String url, @FieldMap Map<String,Object> params);
 }

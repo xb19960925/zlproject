@@ -3,35 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_home"
     app:startDestination="@id/homePageFragment">
-    <fragment
+    <tab_fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.zhulong.fragment.HomePageFragment"
         android:label="homePageFragment">
         <action
             android:id="@+id/toAdvert"
             app:destination="@id/courseFragment" />
-    </fragment>
-    <fragment
+    </tab_fragment>
+    <tab_fragment
         android:id="@+id/courseFragment"
         android:name="com.example.zhulong.fragment.CourseFragment"
         android:label="AdvertFragment">
         <action
             android:id="@+id/backToHome"
             app:popUpTo="@id/homeFragment" />
-    </fragment>
-    <fragment
+    </tab_fragment>
+    <tab_fragment
         android:id="@+id/memberFragment"
         android:name="com.example.zhulong.fragment.MemberFragment"
         android:label="CourseDetailFragment">
         <action
             android:id="@+id/backToHome"
             app:popUpTo="@id/homeFragment" />
-    </fragment>
-    <fragment
+    </tab_fragment>
+    <tab_fragment
         android:id="@+id/datumFragment"
         android:name="com.example.zhulong.fragment.DatumFragment"
         android:label="VideoPlayerFragmentFragment" />
-    <fragment
+    <tab_fragment
         android:id="@+id/myFragment"
         android:name="com.example.zhulong.fragment.MyFragment"
         android:label="GroupDetailFragment" />

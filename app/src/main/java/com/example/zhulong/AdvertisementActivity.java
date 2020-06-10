@@ -27,6 +27,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.example.zhulong.constants.JumpConstant.*;
+
 public class AdvertisementActivity extends BaseAdvertMvpActivity {
 
     private int num = 5;
@@ -88,8 +90,16 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
     }
 
     public void skipActivity() {
-        if (subscribe != null) subscribe.dispose();
-        startActivity(new Intent(this, selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id()) ? application.isLogin() ? MainActivity.class : LoginActivity.class : SubjectActivity.class));
+        if (subscribe != null)subscribe.dispose();
+        if (selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id())){
+            if (application.isLogin()){
+                startActivity(new Intent(this,MainActivity.class));
+            } else {
+                startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SPLASH_TO_LOGIN));
+            }
+        } else {
+            startActivity(new Intent(this,SubjectActivity.class).putExtra(JUMP_KEY,SPLASH_TO_SUB));
+        }
         finish();
     }
 

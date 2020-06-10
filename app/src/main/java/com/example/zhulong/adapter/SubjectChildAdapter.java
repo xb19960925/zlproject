@@ -14,9 +14,7 @@ import com.example.frame.FrameApplication;
 import com.example.zhulong.R;
 import java.util.List;
 
-/**
- * Created by 任小龙 on 2020/6/2.
- */
+
 public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapter.ViewHolder> {
     private List<SpecialtyChooseEntity.DataBean> data;
     private Context mContext;

@@ -40,6 +40,7 @@ public class Host {
     public static String FX_OPENAPI;
     public static String PHOTO_URL;
     public static String PHOTO_OPENAPI;
+    public static String BBS_API;
 
     /**
      * 静态代码块，优先于对象的创建而执行，且只执行一次
@@ -54,6 +55,7 @@ public class Host {
             PHOTO_OPENAPI=AD_OPENAPI;
         }
         if (API_TYPE == 3){
+            BBS_API=mContext.getString(R.string.bbs_api);
             AD_OPENAPI = mContext.getString(R.string.ad_openapi);
             PHOTO_OPENAPI = mContext.getString(R.string.photo_openapi);
             PHOTO_URL = mContext.getString(R.string.photo_url);
