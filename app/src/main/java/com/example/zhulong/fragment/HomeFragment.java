@@ -12,6 +12,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
+import com.example.frame.FrameApplication;
 import com.example.zhulong.R;
 import com.example.zhulong.SubjectActivity;
 import com.example.zhulong.base.BaseMvpFragment;
@@ -24,6 +25,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.example.zhulong.constants.JumpConstant.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,6 +120,12 @@ public class HomeFragment extends BaseMvpFragment<MainPageModel> implements NavC
 
     @OnClick(R.id.select_subject)
     public void onClick() {
-        startActivity(new Intent(getActivity(), SubjectActivity.class));
+        startActivity(new Intent(getContext(), SubjectActivity.class).putExtra(JUMP_KEY, HOME_TO_SUB));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectSubject.setText(FrameApplication.getFrameApplication().getSelectedInfo().getSpecialty_name());
     }
 }

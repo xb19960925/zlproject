@@ -81,11 +81,8 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
     private void goTime() {
         subscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(pLong -> {
-                    if (num - pLong > -1) tvSkip.setText(num - pLong + "s");
-                    else {
-                        skipActivity();
-                        subscribe.dispose();
-                    }
+                    if (num - pLong > 0) tvSkip.setText(num - pLong + "s");
+                    else skipActivity();
                 });
     }
 

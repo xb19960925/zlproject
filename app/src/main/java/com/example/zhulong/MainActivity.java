@@ -1,18 +1,23 @@
 package com.example.zhulong;
 
 
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.example.frame.ConnectionModel;
 import com.example.zhulong.base.BaseMvpActivity;
 import com.example.zhulong.fragment.CourseFragment;
 
-public class MainActivity extends BaseMvpActivity  {
+public class MainActivity extends BaseMvpActivity implements NavController.OnDestinationChangedListener {
 
 
     private NavController navController;
-    private CourseFragment courseFragment;
+
 
     @Override
     protected ConnectionModel setModel() {
@@ -27,6 +32,7 @@ public class MainActivity extends BaseMvpActivity  {
     @Override
     protected void initView() {
         navController = Navigation.findNavController(this, R.id.project_fragment_control);
+        navController.addOnDestinationChangedListener(this);
     }
 
     @Override
@@ -39,4 +45,13 @@ public class MainActivity extends BaseMvpActivity  {
     }
 
 
+    @Override
+    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+        String label = destination.getLabel().toString();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

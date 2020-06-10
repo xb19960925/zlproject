@@ -58,8 +58,8 @@ public class MemberFragment extends BaseMvpFragment<MemberModel> implements Data
 
     @Override
     public void setUpData() {
-        persenter.getData(ApiConfig.VIP_BANNER_LIVE,LoadTypeConfig.NORMAL);
-        persenter.getData(ApiConfig.VIP_PAGE_DATA,LoadTypeConfig.NORMAL);
+//        persenter.getData(ApiConfig.VIP_BANNER_LIVE,LoadTypeConfig.NORMAL);
+//        persenter.getData(ApiConfig.VIP_PAGE_DATA,LoadTypeConfig.NORMAL);
     }
 
     @Override
