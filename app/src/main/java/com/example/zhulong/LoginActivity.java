@@ -80,7 +80,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     }
 
     private void jump() {
-        if (mFromType.equals(SPLASH_TO_LOGIN) || mFromType.equals(SUB_TO_LOGIN))
+        if (mFromType.equals(SPLASH_TO_LOGIN) || mFromType.equals(SUB_TO_LOGIN)||mFromType.equals(REGISTER_TO_LOGIN))
             startActivity(new Intent(this,MainActivity.class));
         finish();
     }
