@@ -1,4 +1,4 @@
 rootProject.name='zhulong'
-include ':app', ':utils'
+include ':app', ':utils', ':basepop', ':Diopop'
 include ':frame'
 include ':data'

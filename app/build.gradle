@@ -54,5 +54,7 @@ dependencies {
     api project(path: ':frame')
     implementation project(path: ':data')
     implementation project(path: ':utils')
+    implementation project(path: ':Diopop')
+
 
 }

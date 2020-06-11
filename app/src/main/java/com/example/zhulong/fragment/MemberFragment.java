@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.data.BannerAndLiveVip;
 import com.example.data.BannerLiveInfo;
 import com.example.data.BaseInfo;
 import com.example.data.IndexCommondEntity;
@@ -58,23 +59,25 @@ public class MemberFragment extends BaseMvpFragment<MemberModel> implements Data
 
     @Override
     public void setUpData() {
-//        persenter.getData(ApiConfig.VIP_BANNER_LIVE,LoadTypeConfig.NORMAL);
-//        persenter.getData(ApiConfig.VIP_PAGE_DATA,LoadTypeConfig.NORMAL);
+        persenter.getData(ApiConfig.VIP_BANNER_LIVE,LoadTypeConfig.NORMAL);
+        persenter.getData(ApiConfig.VIP_PAGE_DATA,LoadTypeConfig.NORMAL);
     }
 
     @Override
     public void netSuccess(int whichApi, Object[] pD) {
         switch (whichApi) {
             case ApiConfig.VIP_BANNER_LIVE:
-                BaseInfo<BannerLiveInfo> bannerLiveInfoBaseInfo = (BaseInfo<BannerLiveInfo>) pD[0];
-                List<BannerLiveInfo.Carousel> carousel = bannerLiveInfoBaseInfo.result.Carousel;
-                List<BannerLiveInfo.Live> live = bannerLiveInfoBaseInfo.result.live;
-                memberListAdapter.setCarousel(carousel);
-                memberListAdapter.setLive(live);
+                BaseInfo<BannerAndLiveVip> bannerLiveInfoBaseInfo = (BaseInfo<BannerAndLiveVip>) pD[0];
+                BannerAndLiveVip result = bannerLiveInfoBaseInfo.result;
+                BannerAndLiveVip.LiveBeanX live = result.getLive();
+                List<BannerAndLiveVip.LiveBeanX.LiveBean> live1 = live.getLive();
+                List<BannerAndLiveVip.LunbotuBean> carousel = result.getLunbotu();
+                memberListAdapter.setBannerData(carousel);
+                memberListAdapter.setLiveData(live1);
                 break;
             case ApiConfig.VIP_PAGE_DATA:
                 BaseInfo<VipPageList> vipPageListBaseInfo = (BaseInfo<VipPageList>) pD[0];
-                List<VipPageList.ResultBean.ListBean> list = vipPageListBaseInfo.result.getResult().getList();
+                List<VipPageList.ListBean> list = vipPageListBaseInfo.result.getList();
                 memberListAdapter.setList(list);
                 break;
         }

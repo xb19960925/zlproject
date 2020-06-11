@@ -88,16 +88,18 @@ public class AdvertisementActivity extends BaseAdvertMvpActivity {
 
     public void skipActivity() {
         if (subscribe != null)subscribe.dispose();
-        if (selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id())){
-            if (application.isLogin()){
-                startActivity(new Intent(this,MainActivity.class));
+        Observable.just("我是防抖动").debounce(20, TimeUnit.MILLISECONDS).subscribe(p->{
+            if (selectedInfo != null && !TextUtils.isEmpty(selectedInfo.getSpecialty_id())) {
+                if (application.isLogin()) {
+                    startActivity(new Intent(AdvertisementActivity.this, MainActivity.class));
+                } else {
+                    startActivity(new Intent(AdvertisementActivity.this, LoginActivity.class).putExtra(JUMP_KEY, SPLASH_TO_LOGIN));
+                }
             } else {
-                startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SPLASH_TO_LOGIN));
+                startActivity(new Intent(AdvertisementActivity.this, SubjectActivity.class).putExtra(JUMP_KEY, SPLASH_TO_SUB));
             }
-        } else {
-            startActivity(new Intent(this,SubjectActivity.class).putExtra(JUMP_KEY,SPLASH_TO_SUB));
-        }
-        finish();
+            finish();
+        });
     }
 
     @Override

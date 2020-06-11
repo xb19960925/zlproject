@@ -13,5 +13,9 @@ public class Method {
     public static final String GETGROUPLIST = "group/getGroupList";
     public static final String REMOVEGROUP = "removeGroup";
     public static final String JOINGROUP = "joingroup";
-
+    public static final String CHECKMOBILECODE = "checkMobileCode";
+    public static final String CHECKMOBILEISUSE = "checkMobileIsUse";
+    public static final String SENDMOBILECODE = "sendMobileCode";
+    public static final String USERNAMEISEXIST = "user/usernameIsExist";
+    public static final String USERREGFORSIMPLE = "userRegForSimple";
 }

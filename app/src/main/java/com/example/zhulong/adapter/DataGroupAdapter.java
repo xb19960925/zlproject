@@ -47,7 +47,7 @@ public class DataGroupAdapter extends RecyclerView.Adapter<DataGroupAdapter.View
         GlideUtil.loadCornerImage(holder.ivThumb,entity.getAvatar(),null,6f);
         holder.tvFocus.setText(entity.isFocus() ? "已关注" : "+关注");
         holder.tvFocus.setSelected(entity.isFocus() ? true : false);
-        holder.tvFocus.setTextColor(entity.isFocus() ? ContextCompat.getColor(mContext, R.color.red) : ContextCompat.getColor(mContext,R.color.fontColorGray));
+        holder.tvFocus.setTextColor(entity.isFocus() ? ContextCompat.getColor(mContext, R.color.fontColorGray) : ContextCompat.getColor(mContext,R.color.red));
         holder.tvFocus.setOnClickListener(view->{
             if (mOnRecyclerItemClick !=null)mOnRecyclerItemClick.onItemClick(position,FOCUS_TYPE);
         });

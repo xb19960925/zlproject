@@ -90,13 +90,15 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     private void goTime() {
         mSubscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(goTime -> {
             loginView.getVerifyCode.setText(time - goTime + "s");
-            if (time - goTime < 1) doPre();
+            if (time - goTime < 1) {
+                doPre();
+                loginView.getVerifyCode.setText("获取验证码");
+            }
         });
     }
     //取消绑定，并将获取验证码重新设置为“获取验证码”
     private void doPre() {
         if (mSubscribe != null && !mSubscribe.isDisposed()) mSubscribe.dispose();
-        loginView.getVerifyCode.setText("获取验证码");
     }
 
     //发送验证码
@@ -124,6 +126,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
                 finish();
                 break;
             case R.id.register_press:
+                startActivity(new Intent(this,RegisterActivity.class));
                 break;
             case R.id.forgot_pwd:
                 break;

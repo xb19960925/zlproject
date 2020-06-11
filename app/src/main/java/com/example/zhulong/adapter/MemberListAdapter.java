@@ -1,6 +1,7 @@
 package com.example.zhulong.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,41 +9,45 @@ import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.data.BannerAndLiveVip;
 import com.example.data.BannerLiveInfo;
 import com.example.data.VipPageList;
 import com.example.zhulong.R;
 import com.example.zhulong.design.BannerLayout;
-import com.yiyatech.utils.ext.StringUtils;
 import com.yiyatech.utils.newAdd.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.spec.PSource;
+import butterknife.BindView;
 
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.ViewHolder> {
-    List<BannerLiveInfo.Carousel> bannerData = new ArrayList<>();
-    List<BannerLiveInfo.Live> liveData = new ArrayList<>();
-    List<VipPageList.ResultBean.ListBean> bottomList=new ArrayList<>();
+    List<BannerAndLiveVip.LiveBeanX.LiveBean> liveData = new ArrayList<>();
+    List<BannerAndLiveVip.LunbotuBean> bannerData = new ArrayList<>();
+    List<VipPageList.ListBean> bottomList=new ArrayList<>();
+
+    public void setList(List<VipPageList.ListBean> bottomList) {
+        this.bottomList.addAll(bottomList);
+        notifyDataSetChanged();
+    }
+
     private Activity mContext;
 
     public MemberListAdapter(Activity mContext) {
         this.mContext = mContext;
     }
 
-    public void setCarousel(List<BannerLiveInfo.Carousel> bannerData) {
-        this.bannerData.addAll(bannerData);
-    }
-
-    public void setLive(List<BannerLiveInfo.Live> liveData) {
+    public void setLiveData(List<BannerAndLiveVip.LiveBeanX.LiveBean> liveData) {
         this.liveData.addAll(liveData);
+        notifyDataSetChanged();
     }
 
-    public void setList(List<VipPageList.ResultBean.ListBean> bottomList) {
-        this.bottomList.addAll(bottomList);
+    public void setBannerData(List<BannerAndLiveVip.LunbotuBean> bannerData) {
+        this.bannerData.addAll(bannerData);
         notifyDataSetChanged();
     }
 
@@ -55,9 +60,9 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Vi
         else if (position == 1) type = LIVE;
         else if (liveData != null && liveData.size() != 0 && position == 1) type = LIVE;
         else {
-            if (position==2) {
+            if (position == 2) {
 
-                    type = GRILD;
+                type = GRILD;
 
             }
         }
@@ -66,42 +71,39 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Vi
 
     @NonNull
     @Override
-    public MemberListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         @LayoutRes int layoutId;
         if (viewType == BANNER) {
             layoutId = R.layout.item_homepage_ad;
-        }
-        else if (viewType == LIVE) {//recleview，
+        } else if (viewType == LIVE) {//recleview，
             layoutId = R.layout.live_recycler_item;
         } else {
-            layoutId = R.layout.item_homepage_post;
+            layoutId = R.layout.item_bottom_member_list;
         }
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false), viewType);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemberListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (getItemViewType(position) == BANNER) {
             holder.banner.attachActivity(mContext);
             ArrayList<String> urlList = new ArrayList<>();
-            for (BannerLiveInfo.Carousel dd:bannerData) {
-                urlList.add(dd.url);
+            for (BannerAndLiveVip.LunbotuBean dd : bannerData) {
+                urlList.add(dd.getImg());
             }
             if (bannerData.size() != 0) holder.banner.setViewUrls(urlList);
         } else if (getItemViewType(position) == LIVE) {
             LinearLayoutManager manager = new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false);
             holder.recyclerView.setLayoutManager(manager);
-            LiveAdapter adapter = new LiveAdapter(liveData, mContext);
-            holder.recyclerView.setAdapter(adapter);
+            MemberLiveAdapter memberLiveAdapter = new MemberLiveAdapter(liveData, mContext);
+            holder.recyclerView.setAdapter(memberLiveAdapter);
         } else {
             if (bottomList.size() == 0) return;
-//            VipPageList.ResultBean.ListBean listBean = bottomList.get(liveData == null || liveData.size() == 0 ? position - 2 : position - 3);
-//            GlideUtil.loadCornerImage(holder.image, entity.pic, null, 6f);
-//            holder.tvCommentNum.setText((TextUtils.isEmpty(entity.reply_num) ? 0 : entity.reply_num) + "人跟帖");
-//            holder.tvBrowseNum.setText(entity.view_num + "人浏览");
-            }
+            holder.memberBottomRecycler.setLayoutManager(new GridLayoutManager(mContext, 2));
+            MemberBottomAdapter memberBottomAdapter = new MemberBottomAdapter(mContext, bottomList);
+            holder.memberBottomRecycler.setAdapter(memberBottomAdapter);
         }
-
+    }
 
 
     @Override
@@ -114,25 +116,16 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Vi
 
         RecyclerView recyclerView;
 
+        RecyclerView memberBottomRecycler;
 
-
-//        TextView title;
-//        TextView tvBrowseNum;
-//        TextView tvCommentNum;
-//        ImageView ivPhoto;
-//        TextView tvAuthorAndTime;
-        public ViewHolder(@NonNull View itemView,int type) {
+        public ViewHolder(@NonNull View itemView, int type) {
             super(itemView);
             if (type == BANNER) {
                 banner = itemView.findViewById(R.id.banner_main);
             } else if (type == LIVE) {
                 recyclerView = itemView.findViewById(R.id.recyclerView);
-            } else{
-//                title = itemView.findViewById(R.id.tv_title_left);
-//                tvBrowseNum = itemView.findViewById(R.id.tv_browse_num);
-//                tvCommentNum = itemView.findViewById(R.id.tv_comment_num);
-//                ivPhoto = itemView.findViewById(R.id.iv_photo);
-//                tvAuthorAndTime = itemView.findViewById(R.id.tv_author_and_time);
+            } else {
+                memberBottomRecycler=itemView.findViewById(R.id.member_bottom_recycler);
             }
         }
     }
