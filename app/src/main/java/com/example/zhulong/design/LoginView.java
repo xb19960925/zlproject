@@ -75,6 +75,7 @@ public class LoginView extends RelativeLayout {
             verifyLogin.setVisibility(GONE);
             accountLogin.setVisibility(GONE);
         }
+        ta.recycle();
     }
 
     private void initView() {

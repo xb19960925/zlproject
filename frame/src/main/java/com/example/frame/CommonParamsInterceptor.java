@@ -123,6 +123,7 @@ public class CommonParamsInterceptor implements Interceptor {
             FormBody formBody = (FormBody) request.body();
             for (int i = 0; i < formBody.size(); i++) {
                 if (formBody.encodedName(i).equals("uid")){
+                    //如果你网络请求传了UID，以传 为准，没传，用登录时候返回的UID
                     uid = formBody.encodedValue(i);
                 }
                 if(formBody.encodedName(i).equals(ConstantKey.SECRET_KEY)){
@@ -170,4 +171,5 @@ public class CommonParamsInterceptor implements Interceptor {
                 .addEncodedQueryParameter("client_id", Constants.CLIENT_ID);
         return request.newBuilder().method(request.method(), request.body()).url(httpBuilder.build()).build();
     }
+
 }

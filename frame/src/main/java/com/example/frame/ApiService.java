@@ -34,8 +34,8 @@ public interface ApiService {
     @GET
     Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList(@Url String url);
 
-    @GET("loginByMobileCode")
-    Observable<BaseInfo<String>> getLoginVerify(@Query("mobile") String mobile);
+    @GET
+    Observable<BaseInfo<String>> getLoginVerify(@Url String url,@Query("mobile") String mobile);
 
     @GET("loginByMobileCode")
     Observable<BaseInfo<LoginInfo>> loginByVerify(@QueryMap Map<String, Object> params);
@@ -90,4 +90,8 @@ public interface ApiService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo> registerCompleteWithSubject(@Url String url, @FieldMap Map<String,Object> params);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo<LoginInfo>> loginByAccount(@Url String url, @FieldMap Map<String,Object> params);
 }

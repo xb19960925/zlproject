@@ -55,7 +55,6 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     @Override
     public void netSuccess(int whichApi, Object[] d) {
         switch (whichApi) {
-
             case ApiConfig.SEND_VERIFY:
                 BaseInfo<String> info = (BaseInfo<String>) d[0];
                 if (info.isSuccess()){
@@ -64,9 +63,10 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
                 } else showToast("验证码发送太频繁，请稍后重试");
                 break;
             case ApiConfig.VERIFY_LOGIN:
+            case ApiConfig.ACCOUNT_LOGIN:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) d[0];
                 LoginInfo loginInfo = baseInfo.result;
-                loginInfo.login_name = phoneNum;
+                if (!TextUtils.isEmpty(phoneNum))loginInfo.login_name = phoneNum;
                 application.setLoginInfo(loginInfo);
                 persenter.getData(ApiConfig.GET_HEADER_INFO);
                 break;
