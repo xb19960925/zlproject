@@ -94,4 +94,11 @@ public interface ApiService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo<LoginInfo>> loginByAccount(@Url String url, @FieldMap Map<String,Object> params);
+
+    @GET
+    Observable<JsonObject> getWechatToken(@Url String url, @QueryMap Map<String,Object> parmas);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo<LoginInfo>> loginByWechat(@Url String url, @FieldMap Map<String,Object> params);
 }

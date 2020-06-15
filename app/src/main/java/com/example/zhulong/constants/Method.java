@@ -20,4 +20,6 @@ public class Method {
     public static final String USERREGFORSIMPLE = "userRegForSimple";
     public static final String USERLOGINNEWAUTH = "user/userLoginNewAuth";
     public static final String LOGINBYMOBILECODE = "loginByMobileCode";
+    public static final String ACCESS_TOKEN = "access_token";
+    public static final String THIRDLOGIN = "thirdlogin";
 }
