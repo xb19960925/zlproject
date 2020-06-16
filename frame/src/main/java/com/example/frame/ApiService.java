@@ -6,6 +6,7 @@ import com.example.data.BaseInfo;
 import com.example.data.CourseBean;
 import com.example.data.CourseListInfo;
 import com.example.data.DataGroupListEntity;
+import com.example.data.GroupDetailEntity;
 import com.example.data.IndexCommondEntity;
 import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
@@ -101,4 +102,14 @@ public interface ApiService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo<LoginInfo>> loginByWechat(@Url String url, @FieldMap Map<String,Object> params);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> bindThirdAccount(@Url String url, @FieldMap Map<String,Object> params);
+
+    @GET
+    Observable<BaseInfo<GroupDetailEntity>> getGroupDetail(@Url String url, @Query("gid") Object object);
+
+    @GET
+    Observable<BaseInfo<GroupDetailEntity>> getGroupDetailFooterData(@Url String url, @QueryMap Map<String,Object> parmas);
 }

@@ -22,4 +22,6 @@ public class Method {
     public static final String LOGINBYMOBILECODE = "loginByMobileCode";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String THIRDLOGIN = "thirdlogin";
+    public static final String NEWTHIRDBIND = "newThirdbind";
+    public static final String GETGROUPTHREADLIST = "group/getGroupThreadList";
 }

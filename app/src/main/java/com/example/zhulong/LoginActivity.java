@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.example.data.BaseInfo;
 import com.example.data.LoginInfo;
 import com.example.data.PersonHeader;
@@ -40,6 +42,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     private Disposable mSubscribe;
     private String phoneNum;
     private String mFromType;
+    private ThirdLoginData mThirdData;
     @Override
     protected AccountModel setModel() {
         return new AccountModel();
@@ -49,6 +52,14 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     protected void initData() {
         mFromType = getIntent().getStringExtra(JUMP_KEY);
         loginView.setLoginViewCallBack(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ConstantKey.BIND_BACK_LOGIN){
+            persenter.getData(ApiConfig.POST_WE_CHAT_LOGIN_INFO, mThirdData);
+        }
     }
 
     @Override
@@ -75,17 +86,22 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
             case ApiConfig.ACCOUNT_LOGIN:
             case ApiConfig.POST_WE_CHAT_LOGIN_INFO:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) pD[0];
-                LoginInfo loginInfo = baseInfo.result;
-                if (!TextUtils.isEmpty(phoneNum)) loginInfo.login_name = phoneNum;
-                application.setLoginInfo(loginInfo);
-                persenter.getData(ApiConfig.GET_HEADER_INFO);
+                if(baseInfo.isSuccess()){
+                    LoginInfo loginInfo = baseInfo.result;
+                    if (!TextUtils.isEmpty(phoneNum)) loginInfo.login_name = phoneNum;
+                    application.setLoginInfo(loginInfo);
+                    persenter.getData(ApiConfig.GET_HEADER_INFO);
+                } else if (baseInfo.errNo == 1300){
+                    Intent intent = new Intent(this, ThirdAccoutBindActivity.class);
+                    startActivityForResult(intent.putExtra("thirdData",mThirdData),ConstantKey.LOGIN_TO_BIND);
+                } else {
+                    showToast(baseInfo.msg);
+                }
                 break;
             case ApiConfig.GET_HEADER_INFO:
                 doPre();
                 PersonHeader personHeader = ((BaseInfo<PersonHeader>) pD[0]).result;
-                if(personHeader!=null){
-                    application.getLoginInfo().personHeader = personHeader;
-                }
+                application.getLoginInfo().personHeader = personHeader;
                 SharedPrefrenceUtils.putObject(this, ConstantKey.LOGIN_INFO, application.getLoginInfo());
                 jump();
                 break;
@@ -96,20 +112,20 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
                 } catch (JSONException pE) {
                     pE.printStackTrace();
                 }
-                ThirdLoginData thirdData = new ThirdLoginData(3);
-                thirdData.setOpenid(allJson.optString("openid"));
-                thirdData.token = allJson.optString("access_token");
-                thirdData.refreshToken = allJson.optString("refresh_token");
-                thirdData.utime = allJson.optLong("expires_in") * 1000;
-                thirdData.unionid = allJson.optString("unionid");
-                persenter.getData(ApiConfig.POST_WE_CHAT_LOGIN_INFO, thirdData);
+                mThirdData = new ThirdLoginData(3);
+                mThirdData.setOpenid(allJson.optString("openid"));
+                mThirdData.token = allJson.optString("access_token");
+                mThirdData.refreshToken = allJson.optString("refresh_token");
+                mThirdData.utime = allJson.optLong("expires_in") * 1000;
+                mThirdData.unionid = allJson.optString("unionid");
+                persenter.getData(ApiConfig.POST_WE_CHAT_LOGIN_INFO, mThirdData);
                 break;
         }
     }
 
     private void jump() {
-        if (mFromType.equals(SPLASH_TO_LOGIN) || mFromType.equals(SUB_TO_LOGIN)||mFromType.equals(REGISTER_TO_LOGIN))
-            startActivity(new Intent(this,MainActivity.class));
+        if (mFromType.equals(SPLASH_TO_LOGIN) || mFromType.equals(SUB_TO_LOGIN))
+            startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
@@ -138,10 +154,9 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
 
     @Override
     public void loginPress(int type, String userName, String pwd) {
-        doPre();
-
         if (loginView.mCurrentLoginType == loginView.VERIFY_TYPE)
             persenter.getData(ApiConfig.VERIFY_LOGIN, userName, pwd);
+        else persenter.getData(ApiConfig.ACCOUNT_LOGIN, userName, pwd);
     }
 
     @OnClick({R.id.close_login, R.id.logo_image, R.id.login_view, R.id.register_press, R.id.forgot_pwd, R.id.base_line, R.id.login_by_qq, R.id.login_by_wx, R.id.third_login_desc})

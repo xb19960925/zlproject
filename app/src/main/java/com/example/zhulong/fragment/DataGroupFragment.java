@@ -1,6 +1,7 @@
 package com.example.zhulong.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +11,9 @@ import com.example.data.DataGroupListEntity;
 import com.example.frame.ApiConfig;
 import com.example.frame.FrameApplication;
 import com.example.frame.LoadTypeConfig;
+import com.example.frame.constants.ConstantKey;
 import com.example.zhulong.LoginActivity;
+import com.example.zhulong.MainActivity;
 import com.example.zhulong.R;
 import com.example.zhulong.adapter.DataGroupAdapter;
 import com.example.zhulong.base.BaseMvpFragment;
@@ -117,7 +120,10 @@ public class DataGroupFragment extends BaseMvpFragment<DatumModel> implements Da
         if (pObjects != null && pObjects.length != 0){
             switch ((int)pObjects[0]){
                 case ITEM_TYPE:
-
+                    MainActivity activity = (MainActivity) getActivity();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ConstantKey.GROU_TO_DETAIL_GID,mList.get(pos).getGid());
+                    activity.navController.navigate(R.id.dataGroupDetailFragment,bundle);
                     break;
                 case FOCUS_TYPE:
                     boolean login = FrameApplication.getFrameApplication().isLogin();

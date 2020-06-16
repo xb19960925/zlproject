@@ -3,6 +3,8 @@ package com.example.zhulong.base;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,5 +35,8 @@ public class BaseFragment extends Fragment {
 
     public void showToast(Object content) {
         Toast.makeText(getContext(), content.toString(), Toast.LENGTH_SHORT).show();
+    }
+    public int setColor(@ColorRes int pColor){
+        return ContextCompat.getColor(getContext(),pColor);
     }
 }

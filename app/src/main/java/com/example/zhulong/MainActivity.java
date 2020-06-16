@@ -16,7 +16,7 @@ import com.example.zhulong.fragment.CourseFragment;
 public class MainActivity extends BaseMvpActivity implements NavController.OnDestinationChangedListener {
 
 
-    private NavController navController;
+    public NavController navController;
 
 
     @Override
